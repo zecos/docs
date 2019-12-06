@@ -1,76 +1,217 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useEffect, useState } from 'react';
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  createStyles,
-  makeStyles,
-  Theme,
-  ListItemText,
-  ListItem,
-  List,
-  Drawer
-} from "@material-ui/core"
-import MenuIcon from '@material-ui/icons/Menu';
+import React, { useEffect, useState } from 'react'
+import Drawer from '@material-ui/core/Drawer';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import { makeStyles, Theme, createStyles, ThemeProvider } from '@material-ui/core/styles';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Hidden from '@material-ui/core/Hidden';
+import MenuIcon from '@material-ui/icons/Menu'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ReactMarkdown from 'react-markdown'
-import './App.css';
-import overview from "./Overview.md"
+import './App.css'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  BrowserRouter
+} from "react-router-dom"
+import overview from "./pages/overview.md"
+import createInput from "./pages/inputs/create-input.md"
+import createLayout from "./pages/inputs/create-layout.md"
+import {theme} from "./theme"
+import clsx from 'clsx'
 
 const getMd = (file: string) => {
   const [cmpt, setCmpt] = useState(<div>Loading...</div>)
   useEffect(() => {
     (async () => {
-      const text = await fetch(file).then(res => res.text())
-      setCmpt(<ReactMarkdown source={text} />)
+      try {
+        const text = await fetch(file).then(res => res.text())
+        setCmpt(<ReactMarkdown source={text} />)
+      } catch {
+        console.log("couldn't fetch file " + file)
+      }
     })()
-  })
+  }, [file])
   return cmpt
 }
+const drawerWidth = 240
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1,
+      display: 'flex',
+    },
+    appBar: {
+      transition: theme.transitions.create(['margin', 'width'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+    },
+    appBarShift: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+      transition: theme.transitions.create(['margin', 'width'], {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
     },
     menuButton: {
       marginRight: theme.spacing(2),
     },
-    title: {
+    hide: {
+      display: 'none',
+    },
+    drawer: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+    drawerPaper: {
+      width: drawerWidth,
+    },
+    drawerHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      padding: theme.spacing(0, 1),
+      ...theme.mixins.toolbar,
+      justifyContent: 'flex-end',
+    },
+    content: {
       flexGrow: 1,
+      padding: theme.spacing(3),
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      marginLeft: 0,
+    },
+    contentShift: {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: drawerWidth,
     },
   }),
 )
 
+const renderMenuLink = ({title, link}) => (
+  <Link to={link} key={link}>
+    <ListItem button>
+    <ListItemText primary={title} />
+    </ListItem>
+  </Link>
+)
+
+const renderSection = ({name, children}) => (
+  <>
+    <ListItem>
+      <Typography variant="h6" noWrap>
+        {name}
+      </Typography>
+    </ListItem>
+    {children.map(renderMenuLink)}
+    <Divider />
+  </>
+)
+
+const renderSectionRoutes = ({children}) => children.map(renderRoute)
+const renderRoute = ({cmpt, link}) => {
+  return <Route exact path={link}>
+    {cmpt}
+    cmpt
+  </Route>
+}
+
 function App() {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(true)
   const toggleMenuOpen = () => setMenuOpen(!menuOpen)
   const classes = useStyles()
+  const sections = [{
+    name: "@zecos/inputs",
+    children: [{
+      title: "Overview",
+      link: "/",
+      cmpt: getMd(overview),
+    }]
+  }, {
+    name: "inputs",
+    children: [{
+      title: "createInput",
+      link: "/inputs/create-input",
+      cmpt: getMd(createInput),
+    }, {
+      title: "createLayout",
+      link: "/inputs/create-layout",
+      cmpt: getMd(createLayout)
+    }]
+  }]
+  
+
   return (
-    <div>
-      <AppBar position="static">
+    <ThemeProvider theme={theme}>
+    <BrowserRouter>
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: menuOpen,
+        })}
+      >
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleMenuOpen}>
+          <IconButton
+            color="inherit"
+            aria-label="menu"
+            onClick={toggleMenuOpen}
+            edge="start"
+            className={clsx(classes.menuButton, menuOpen && classes.hide)}
+          >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" noWrap>
             @zecos/inputs
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer open={menuOpen} onClose={toggleMenuOpen}>
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+      <Drawer
+        variant="persistent"
+        anchor="left"
+        open={menuOpen}
+        onClose={toggleMenuOpen}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={toggleMenuOpen}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+      <List>
+        {sections.map(renderSection)}
+      </List>
       </Drawer>
-      {getMd(overview)}
-    </div>
+      <main
+        className={clsx(classes.content, {
+          [classes.contentShift]: menuOpen,
+        })}
+      >
+        <div className={classes.drawerHeader} />
+        <Switch>
+          {sections.map(renderSectionRoutes)}
+        </Switch>
+      </main>
+    </BrowserRouter>
+    </ThemeProvider>
   )
 }
 
-export default App;
+export default App
