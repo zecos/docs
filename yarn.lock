@@ -1691,6 +1691,49 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
+"@zecos/fieldz@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@zecos/fieldz/-/fieldz-0.0.8.tgz#ee2bd2c06b505b671767048e84e15b07e292f4a5"
+  integrity sha512-xSs5KfTqlHPLybYmPCsoMXP2YGIsM8GajeznRnKIwHdLbqZGle5AMocJHIbC4Rwag8By4Jg4czwqKDIgoa4HnQ==
+  dependencies:
+    "@zecos/validatorz" "0.0.1"
+
+"@zecos/inputs-basic@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@zecos/inputs-basic/-/inputs-basic-0.0.5.tgz#2fdda58238028d37f139d07e7e5aa5bde2a30715"
+  integrity sha512-6gHpOzSQf1pFpgz34WDKwJo+NoqeqqDrb3soKj8EEBfWPmnCV0gs8ZymOcNdQrubWPJryAZv6+TnL0N51Nw02g==
+  dependencies:
+    "@zecos/inputs" "^0.0.1"
+
+"@zecos/inputs@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@zecos/inputs/-/inputs-0.0.1.tgz#f8ab5b5f3e0460f354fee1b81ab17b069089d164"
+  integrity sha512-l9M+ZvJ4dsbc8Ml4dQy1ZcVtfu4VEZ0N1BESUdYOjfiO3AUw0WR/OI6W10dCJRRkC/W3ZmGj9F5yMGkQ0bSGSQ==
+  dependencies:
+    "@zecos/fieldz" "^0.0.8"
+    "@zecos/react-fieldz" "^0.2.2"
+    "@zecos/validatorz" "^0.0.2"
+
+"@zecos/react-fieldz@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@zecos/react-fieldz/-/react-fieldz-0.2.2.tgz#8f59da81c94bb07a5a80d4e1f5a2515f5391bd44"
+  integrity sha512-g20Tse3mK5F0kI7OjHE2UNu/fZ7tXvw3Pe2KoaxvgBzVmIn3IblUSV1NOtfZBl+/zMkeBD7JNO8k0ubYhg1U+Q==
+  dependencies:
+    "@zecos/fieldz" "^0.0.8"
+    validatorz "^2.3.3"
+
+"@zecos/validatorz@0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@zecos/validatorz/-/validatorz-0.0.1.tgz#ee670d6748a085c8965a692ee8fcf2e3894a24c3"
+  integrity sha512-w38QHxcY7Le+tu8Urws7vcWbmn0cmqiKOUDFHV7SMmUAAmbkJUM6gFaEGfwnCDWip7B9kqrtQXfm6fXWn9cDGA==
+
+"@zecos/validatorz@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@zecos/validatorz/-/validatorz-0.0.2.tgz#2315c10dc48b8a9b3c82de06f548c895187a21b6"
+  integrity sha512-nT8+uFJeTxNSyzixKP6Kv6JUvRHC4sRmGZABwMAL/tvL40oha0VAJxzJ7JvKNTajCOoQqruf2lPsGVaKFechwQ==
+  dependencies:
+    human-list "^0.0.1"
+
 abab@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -4991,6 +5034,11 @@ hex-color-regex@^1.1.0:
   resolved "https://registry.yarnpkg.com/hex-color-regex/-/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"
   integrity sha512-l9sfDFsuqtOqKDsQdqrMRk0U85RZc0RtOR9yPI7mRVOa4FsR/BVnZ0shmQRM96Ji99kYZP/7hn1cedc1+ApsTQ==
 
+highlight.js@^9.11.0:
+  version "9.16.2"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.16.2.tgz#68368d039ffe1c6211bcc07e483daf95de3e403e"
+  integrity sha512-feMUrVLZvjy0oC7FVJQcSQRqbBq9kwqnYE4+Kj9ZjbHh3g+BisiPgF49NyQbVLNdrL/qqZr3Ca9yOKwgn2i/tw==
+
 history@^4.9.0:
   version "4.10.1"
   resolved "https://registry.yarnpkg.com/history/-/history-4.10.1.tgz#33371a65e3a83b267434e2b3f3b1b4c58aad4cf3"
@@ -5202,6 +5250,11 @@ https-browserify@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
   integrity sha1-7AbBDgo0wPL68Zn3/X/Hj//QPHM=
+
+human-list@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/human-list/-/human-list-0.0.1.tgz#5cb67732d496a0251aaec3c1ee39122c76111c25"
+  integrity sha512-ZcIwQzHESdbgMf8zMxzWMRCD3FD7uox5OiKhm8KMi8GuZcFJWoOmQOMSdMDR1Xo0tqDN397LkTUzdtFzKsmMNw==
 
 hyphenate-style-name@^1.0.3:
   version "1.0.3"
@@ -9011,6 +9064,13 @@ react-error-overlay@^6.0.4:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.4.tgz#0d165d6d27488e660bc08e57bdabaad741366f7a"
   integrity sha512-ueZzLmHltszTshDMwyfELDq8zOA803wQ1ZuzCccXa1m57k1PxSHfflPD5W9YIiTXLs0JTLzoj6o1LuM5N6zzNA==
 
+react-highlight@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/react-highlight/-/react-highlight-0.12.0.tgz#34de986a0bfdf228904d0c269b69538d95b35802"
+  integrity sha512-j04EWbYOFM0PryhF5Vvl0FDa/dD3M6q0Sl+nFN9kTvWQ9hFkfISNNs85+ssL4TSkDM+4pQTpMdxlDRi8yfIxjw==
+  dependencies:
+    highlight.js "^9.11.0"
+
 react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
@@ -10923,6 +10983,11 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
+
+validatorz@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/validatorz/-/validatorz-2.3.3.tgz#920445b622562dcabc3ac9dc6902e161f0bf38bb"
+  integrity sha512-8g/VgYKz88VztfAQ3MmuJ1MY6yU/DuO3ObJhld9AJOO7yQ7/ueX36c6xjC+SlPJIvYCBnDR19lANJsyFjtumUg==
 
 value-equal@^1.0.1:
   version "1.0.1"

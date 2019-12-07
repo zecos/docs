@@ -29,6 +29,8 @@ import createInput from "./pages/inputs/create-input.md"
 import createLayout from "./pages/inputs/create-layout.md"
 import {theme} from "./theme"
 import clsx from 'clsx'
+import { CodeBlock } from './CodeBlock';
+
 
 const getMd = (file: string) => {
   const [cmpt, setCmpt] = useState(<div>Loading...</div>)
@@ -36,7 +38,12 @@ const getMd = (file: string) => {
     (async () => {
       try {
         const text = await fetch(file).then(res => res.text())
-        setCmpt(<ReactMarkdown source={text} />)
+        setCmpt(<ReactMarkdown
+          source={text}
+          renderers={{
+            code: CodeBlock,
+          }}
+        />)
       } catch {
         console.log("couldn't fetch file " + file)
       }
@@ -48,6 +55,9 @@ const drawerWidth = 240
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    white: {
+      color: "white",
+    },
     root: {
       display: 'flex',
     },
@@ -103,60 +113,70 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 )
+let lsMenuOpen = true
+if (typeof localStorage !== "undefined"
+  && typeof localStorage["menu-open"] !== "undefined") {
+    lsMenuOpen = JSON.parse(localStorage["menu-open"])
+}
 
-const renderMenuLink = ({title, link}) => (
+const renderMenuLink = ({title, link, code}) => (
   <Link to={link} key={link}>
     <ListItem button>
-    <ListItemText primary={title} />
+    <ListItemText primary={code ? <code>{title}</code> : title} />
     </ListItem>
   </Link>
 )
 
-const renderSection = ({name, children}) => (
-  <>
+const renderSection = ({name, children}, i) => (
+  <span key={name || i}>
     <ListItem>
-      <Typography variant="h6" noWrap>
-        {name}
-      </Typography>
+      {name !== "" ? (
+        <Typography variant="h6" noWrap>
+          {name}
+        </Typography>
+      ): ""}
     </ListItem>
     {children.map(renderMenuLink)}
     <Divider />
-  </>
+  </span>
 )
 
 const renderSectionRoutes = ({children}) => children.map(renderRoute)
 const renderRoute = ({cmpt, link}) => {
   return <Route exact path={link}>
     {cmpt}
-    cmpt
   </Route>
 }
 
 function App() {
-  const [menuOpen, setMenuOpen] = useState(true)
-  const toggleMenuOpen = () => setMenuOpen(!menuOpen)
+  const [menuOpen, setMenuOpen] = useState(lsMenuOpen)
+  const toggleMenuOpen = () => {
+    localStorage["menu-open"] = !menuOpen
+    setMenuOpen(!menuOpen)
+  }
   const classes = useStyles()
   const sections = [{
-    name: "@zecos/inputs",
+    name: "",
     children: [{
       title: "Overview",
       link: "/",
       cmpt: getMd(overview),
     }]
   }, {
-    name: "inputs",
+    name: "@zecos/inputs",
     children: [{
       title: "createInput",
+      code: true,
       link: "/inputs/create-input",
       cmpt: getMd(createInput),
     }, {
       title: "createLayout",
       link: "/inputs/create-layout",
-      cmpt: getMd(createLayout)
+      cmpt: getMd(createLayout),
+      code: true,
     }]
   }]
   
-
   return (
     <ThemeProvider theme={theme}>
     <BrowserRouter>
@@ -176,9 +196,11 @@ function App() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            @zecos/inputs
-          </Typography>
+          <Link to="/">
+            <Typography variant="h6" noWrap>
+              <span className={classes.white}>@zecos</span>
+            </Typography>
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -199,12 +221,12 @@ function App() {
         {sections.map(renderSection)}
       </List>
       </Drawer>
+      <div className={classes.drawerHeader} />
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: menuOpen,
         })}
       >
-        <div className={classes.drawerHeader} />
         <Switch>
           {sections.map(renderSectionRoutes)}
         </Switch>

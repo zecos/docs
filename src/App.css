@@ -1,6 +1,6 @@
 a {
   text-decoration: none;
-  color: green;
+  color: #0069ff;
 }
 .App {
   text-align: center;
@@ -29,7 +29,7 @@ a {
 }
 
 .App-link {
-  color: #61dafb;
+  color: #157ed4;
 }
 
 @keyframes App-logo-spin {
@@ -39,4 +39,14 @@ a {
   to {
     transform: rotate(360deg);
   }
+}
+
+.code-block code {
+  border-radius: 5px;
+  padding: 16px;
+  line-height: 1.2;
+}
+
+main {
+  max-width: 1200px;
 }
