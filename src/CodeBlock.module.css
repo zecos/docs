@@ -1,0 +1,11 @@
+.example {
+  border-radius: 4px;
+  background: #eee;
+  padding: 12px;
+}
+
+.result {
+  margin-bottom: 8px;
+  padding-left: 2px;
+  font-weight: bold;
+}
