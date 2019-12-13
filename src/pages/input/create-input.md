@@ -11,60 +11,7 @@
 #### Example
 
 ```tsx
-// text.tsx
-
-export const text = createInput(({helpers, state}) => {
-    const {
-      id,
-      name,
-      label,
-      value,
-      handleChange,
-      handleBlur,
-    } = helpers
-    
-    const {touched, errors} = state
-    return (
-      <div>
-        <label className={styles.textLabel} htmlFor={name}>
-          {label}
-        {touched && errors[0].toString()}
-        </label>
-        <input
-          name={name}
-          aria-label={label}
-          value={value}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          id={id}
-        />
-      </div>
-    )
-})
-```
-
-```tsx
-// Form.tsx
-
-import React from "react"
-import { validateName } from "@zecos/validate"
-import { text } from "./text"
-
-export const Form = () => {
-  const [FirstName, firstNameState, firstNameActions] = text({
-    name: "firstName",
-    validate: nameValidator,
-    init: "Bob",
-  })
-
-  return (
-    <form className="form">
-      <FirstName /><br />
-      First Name Value: {firstNameState.value}
-      
-    </form>
-  )
-}
+example:0020_create-input
 ```
 
 For full example, see [@zecos/inputs-basic](https://github.com/zecos/inputs-basic), or better yet, fork it and create your own UI!

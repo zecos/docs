@@ -41,11 +41,10 @@ a {
   }
 }
 
-.code-block code {
+.code-block pre {
   border-radius: 5px;
-  padding: 16px;
-  line-height: 1.2;
 }
+
 
 main {
   max-width: 1200px;

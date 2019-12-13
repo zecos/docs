@@ -38,7 +38,7 @@ import ScrollMemory from 'react-router-scroll-memory'
 import {theme} from "./theme"
 
 import clsx from 'clsx'
-import { CodeBlock } from './CodeBlock';
+import { CodeBlock } from './CodeBlock/CodeBlock';
 
 
 const getMd = (file: string) => {
