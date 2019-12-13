@@ -1,11 +1,12 @@
-.example {
-  border-radius: 4px;
-  background: #eee;
-  padding: 12px;
-}
-
 .result {
+  padding: 20px;
+  border-radius: 4px;
+  background: #3B4252;
+}
+.resultHeading {
   margin-bottom: 8px;
+  margin-top: 0;
   padding-left: 2px;
+  line-height: 1;
   font-weight: bold;
 }

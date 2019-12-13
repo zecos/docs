@@ -1,6 +1,10 @@
 a {
   text-decoration: none;
-  color: #0069ff;
+  color: #81A1C1;
+}
+body {
+  background: #434C5E;
+  color: #D8DEE9;
 }
 .App {
   text-align: center;
@@ -28,9 +32,6 @@ a {
   color: white;
 }
 
-.App-link {
-  color: #157ed4;
-}
 
 @keyframes App-logo-spin {
   from {
@@ -48,4 +49,8 @@ a {
 
 main {
   max-width: 1200px;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  color: #8FBCBB;
 }

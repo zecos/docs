@@ -21,7 +21,7 @@ const HL = ({language, children}) => {
   }, [codeEl, language, children])
   return (
     <div className="code-block">
-      <pre ref={codeEl} className={`language-${language}`}>
+      <pre ref={codeEl} className={`language-${language} example`}>
         {children}
       </pre>
     </div>
@@ -40,8 +40,8 @@ export const CodeBlock = ({language, value}) => {
       <HL language={language}>
         {value}
       </HL>
-      <div className={styles.result}>Result</div>
-      <div className={styles.example}>
+      <div className={styles.result}>
+      <h3 className={styles.resultHeading}>Result</h3>
         <Cmpt />
       </div>
       </>

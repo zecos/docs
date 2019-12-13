@@ -5,11 +5,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 1.06rem;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-  background: #eee;
+  font-family: "Fira Code", source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  /* background: #3B4252; */
   display: inline-block;
   box-sizing: border-box;
+  background-color: #3B4252;
 }

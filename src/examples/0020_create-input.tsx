@@ -7,17 +7,16 @@ const text = createInput(({helpers, state}) => {
       id,
       name,
       label,
-      value,
       handleChange,
       handleBlur,
     } = helpers
     
-    const {touched, errors} = state
+    const {touched, errors, value} = state
     return (
       <div>
         <label htmlFor={name}>
           {label}: &nbsp;
-        {touched && errors[0].toString()}
+        {touched && errors[0] && errors[0].toString()}
         </label>
         <input
           name={name}
