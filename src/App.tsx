@@ -25,9 +25,18 @@ import {
   BrowserRouter
 } from "react-router-dom"
 import overview from "./pages/overview.md"
-import createInput from "./pages/inputs/create-input.md"
-import createLayout from "./pages/inputs/create-layout.md"
+import createInputPage from "./pages/input/create-input.md"
+import createLayoutPage from "./pages/input/create-layout.md"
+import createMultiPage from "./pages/input/create-multi.md"
+import fieldPage from './pages/field.md'
+import inputMuiPage from './pages/input-mui.md'
+import inputBasicPage from './pages/input-basic.md'
+import inputPickerPage from './pages/input-picker.md'
+import validatePage from './pages/validate.md'
+import ScrollMemory from 'react-router-scroll-memory'
+
 import {theme} from "./theme"
+
 import clsx from 'clsx'
 import { CodeBlock } from './CodeBlock';
 
@@ -103,6 +112,7 @@ const useStyles = makeStyles((theme: Theme) =>
         duration: theme.transitions.duration.leavingScreen,
       }),
       marginLeft: 0,
+      paddingBottom: theme.spacing(6),
     },
     contentShift: {
       transition: theme.transitions.create('margin', {
@@ -163,23 +173,55 @@ function App() {
       cmpt: getMd(overview),
     }]
   }, {
-    name: "@zecos/inputs",
+    name: "@zecos/input",
     children: [{
       title: "createInput",
       code: true,
-      link: "/inputs/create-input",
-      cmpt: getMd(createInput),
+      link: "/input/create-input",
+      cmpt: getMd(createInputPage),
     }, {
       title: "createLayout",
-      link: "/inputs/create-layout",
-      cmpt: getMd(createLayout),
+      link: "/input/create-layout",
+      cmpt: getMd(createLayoutPage),
       code: true,
+    }, {
+      title: "createMulti",
+      link: "/input/create-multi",
+      cmpt: getMd(createMultiPage),
+      code: true,
+    }],
+  }, {
+    name: "UI Libraries",
+    children: [{
+      title: "@zecos/input-basic",
+      link: "/input-basic",
+      cmpt: getMd(inputBasicPage),
+    }, {
+      title: "@zecos/input-mui",
+      link: "/input-mui",
+      cmpt: getMd(inputMuiPage),
+    }, {
+      title: "@zecos/input-picker",
+      link: "/input-picker",
+      cmpt: getMd(inputPickerPage),
+    }]
+  }, {
+    name: "General",
+    children: [{
+      title: "@zecos/field",
+      link: "/field",
+      cmpt: getMd(fieldPage),
+    }, {
+      title: "@zecos/validate",
+      link: "/validate",
+      cmpt: getMd(validatePage),
     }]
   }]
   
   return (
     <ThemeProvider theme={theme}>
     <BrowserRouter>
+      <ScrollMemory />
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {

@@ -1,20 +1,26 @@
-# createInput
+### @zecos/input
 
-`createInput` allows you to quickly create React UI components with little to no boilerplate.
+`@zecos/input` is a library for quickly creating React UI components with little to no boilerplate.
 
-## Example
+#### Installation
+
+`yarn add @zecos/input`
+
+`npm i -S @zecos/input`
+
+#### Example
 
 ```tsx
 // text.tsx
 
-export const useText = createInput(({helpers, state}) => {
+export const text = createInput(({helpers, state}) => {
     const {
       id,
       name,
       label,
       value,
-      onChange,
-      onBlur,
+      handleChange,
+      handleBlur,
     } = helpers
     
     const {touched, errors} = state
@@ -28,8 +34,8 @@ export const useText = createInput(({helpers, state}) => {
           name={name}
           aria-label={label}
           value={value}
-          onChange={onChange}
-          onBlur={onblur
+          onChange={handleChange}
+          onBlur={handleBlur}
           id={id}
         />
       </div>
@@ -41,7 +47,7 @@ export const useText = createInput(({helpers, state}) => {
 // Form.tsx
 
 import React from "react"
-import { nameValidator } from "@zecos/validators"
+import { validateName } from "@zecos/validate"
 import { text } from "./text"
 
 export const Form = () => {
@@ -80,25 +86,24 @@ For full example, see [@zecos/inputs-basic](https://github.com/zecos/inputs-basi
   * `reset`: sets the field back to its original state (pristine, untouched, with the original init values)
   * `setTouched`: set the `touched` value to `true`
 * `helpers`: premade functions and properties to make your life easier
-  * `title`: the form name in Title Case
-  * `camel`: the form name in camelCase
-  * `kebab`: the form name in kebab-case
-  * `snake`: the form name in snake_case
+  * `title`: the form name in title case
+  * `camel`: the form name in camel case
+  * `snake`: the form name in snake case
   * `aria-label`: the form name in title case (for convenience)
-  * `onChange`: a function that sets the field value to the event's target value
-  * `onBlur`: a function that sets the field's `touched` property to `true`
+  * `handleChange`: a function that sets the field value to the event's target value
+  * `handleBlur`: a function that sets the field's `touched` property to `true`
   * `value`: value of the field 
   * `label`: the form name in title case (for convenience)
-  * `name`: the form name in kebab case (for convenience)
+  * `name`: the form name in snake case (for convenience)
   * `htmlFor`: same as `name`
-  * `id`: the form name in kebab case (for convenience)
+  * `id`: the form name in snake case (for convenience)
 * `args`: arguments passed after the `inputs` options
   * so in our example, after `{name: "firstName", ...}` you could pass additional arguments that would show up here.
 
 The user is then passed your input, along with the form state and actions:
 
 ```ts
-const [FirstName, firstNameState, firstNameActions] = useText({
+const [FirstName, firstNameState, firstNameActions] = text({
   name: "firstName",
   validate: nameValidator,
   init: "Bob",
@@ -107,10 +112,10 @@ const [FirstName, firstNameState, firstNameActions] = useText({
 
 The user can read all the values you can from `state` or perform any of the actions you can with `actions`, and each time your form will be rerendered. This gives you all the benefits of customization and and convenience of automatic generation.
 
-The first argument given to `useText` (`{name: "firstName", ...}`) are consumed by `inputs` and are used to generated the `helpers`/`state`/`actions` properties.
+The first argument given to `text` (`{name: "firstName", ...}`) are consumed by `inputs` and are used to generated the `helpers`/`state`/`actions` properties.
 
 * `name`: is the name given to the form.
-  * it is *crucial* that this is in camelcase in order to generate the proper title case, kebab case, etc.. Make sure you communicate this to your user.
+  * it is *crucial* that this is in camelcase in order to generate the proper title case, snake case, etc.. Make sure you communicate this to your user.
   * this is required
 * `validate`: should be a function that takes the form value and outputs an array of errors.
   * not required (will just not validate anything)
@@ -118,13 +123,16 @@ The first argument given to `useText` (`{name: "firstName", ...}`) are consumed 
 * `init`: initial value for the field
   * default is `""` (empty string)
   * if your input requires a number, make sure to change `""` to 0, likewise with other types `""` would be invalid for.
+* `props`: initial properties for the field
+  * these can be overriden by props passed to the component
+  * these cannot be changed (at the moment, [open an issue](https://github.com/zecos/input/issues/new) if this is crucial for you)
 
 #### Select Example
 
 To demonstrate the power an flexibility of these options, let's take a look at a select input.
 
 ```tsx
-// use-select.tsx
+// select.tsx
 
 const renderOption = ([key, label]) => {
   return (
@@ -134,13 +142,13 @@ const renderOption = ([key, label]) => {
   )
 }
 
-export const useSelect = createInput(({helpers, props}) => {
+export const select = createInput(({helpers, props}) => {
   const {
     id,
     name,
     value,
-    onChange,
-    onBlur,
+    handleChange,
+    handleBlur,
     label,
     htmlFor,
   } = helpers
@@ -152,8 +160,8 @@ export const useSelect = createInput(({helpers, props}) => {
       </label>
       <select
         className={styles.selectGroup}
-        onChange={onChange}
-        onBlur={onBlur}
+        onChange={handleChange}
+        onBlur={handleBlur}
         name={name}
         id={id}
         value={value}
@@ -171,10 +179,10 @@ export const useSelect = createInput(({helpers, props}) => {
 
 import React from "react"
 import { nameValidator } from "@zecos/validators"
-import { useSelect } from "./use-select"
+import { text } from "./text"
 
 export const Form = () => {
-  const [FavoriteColor, favoriteColorState] = useSelect({
+  const [FavoriteColor, favoriteColorState] = select({
     init: "blue",
     name: "favoriteColor",
   }, {options={{green: "Green", blue: "Blue"}}})
