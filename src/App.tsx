@@ -225,13 +225,14 @@ routes
 
 const getCmpt = (url) => {
   const classes:any = useStyles()
+  const { pathname } = useLocation()
   return (
     <>
     <ScrollMemory />
     {React.createElement(getMd(url))}
     <div className={classes.navLinks}>
     <div className={classes.navLeft}>
-      <Link to={pageToPrevMap[url]}>
+      <Link to={pageToPrevMap[pathname]}>
         <IconButton className={classes.largeFont}>
           <ChevronLeftIcon fontSize="inherit" className={classes.chevron} />
         </IconButton>
@@ -239,7 +240,7 @@ const getCmpt = (url) => {
     </div>
     <div className={classes.navSeparator} />
     <div className={classes.navRight}>
-      <Link to={pageToNextMap[url]}>
+      <Link to={pageToNextMap[pathname]}>
         <IconButton className={classes.largeFont}>
           <ChevronRightIcon fontSize="inherit" className={classes.chevron} />
         </IconButton>
@@ -270,6 +271,7 @@ const App = () => {
     <div>
       <AppBar
         position="fixed"
+        color="secondary"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: menuOpen,
         })}

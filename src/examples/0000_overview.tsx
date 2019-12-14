@@ -11,7 +11,7 @@ const Example = () => {
   
   return (
     <>
-      <FirstName />
+      <FirstName /> {/* form input */}
       <FirstNameDisplay full={true} />
     </>
   )

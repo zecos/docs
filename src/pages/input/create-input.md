@@ -28,14 +28,16 @@ For full example, see the [@zecos/input-basic code](https://github.com/zecos/inp
   * `errors`: the errors returned by your `validate` function
   * `pristine`: whether or not the field data has been manipulated
 * `actions`:
-  * `getState`: returns the same thing as `1`
+  * `getState`: returns `state` (the same thing as above)
   * `setValue`: set the value of the field (also runs validation and sets pristine to false)
   * `reset`: sets the field back to its original state (pristine, untouched, with the original init values)
   * `setTouched`: set the `touched` value to `true`
 * `helpers`: premade functions and properties to make your life easier
-  * `title`: the form name in title case
-  * `camel`: the form name in camel case
-  * `snake`: the form name in snake case
+  * `camel`: the form name in `camelCase`
+  * `upperCamel`: the form nam in `UpperCamelCase`
+  * `title`: the form name in `Title Case`
+  * `snake`: the form name in `snake_case`
+  * `kebab`: the form name in `kebab-case`
   * `aria-label`: the form name in title case (for convenience)
   * `handleChange`: a function that sets the field value to the event's target value
   * `handleBlur`: a function that sets the field's `touched` property to `true`
@@ -44,7 +46,7 @@ For full example, see the [@zecos/input-basic code](https://github.com/zecos/inp
   * `htmlFor`: same as `name`
   * `id`: the form name in snake case (for convenience)
   
-The user is then passed your input, along with the form state and actions:
+The consumer is then passed your input, along with the form state and actions:
 
 ```ts
 const {FirstName, firstNameState, firstNameActions} = Text({
@@ -54,22 +56,22 @@ const {FirstName, firstNameState, firstNameActions} = Text({
 })
 ```
 
-The user can read all the values you can from `state` or perform any of the actions you can with `actions`, and each time your form will be rerendered. This gives you all the benefits of customization and and convenience of automatic generation.
+The consumer can read all the values you can from `state` or perform any of the actions you can with `actions`, and each time your form will be rerendered. This gives you all the benefits of customization and and convenience of automatic generation.
 
-The first argument given to `Text` (`{name: "firstName", ...}`) are consumed by `inputs` and are used to generate the `helpers`/`state`/`actions` properties.
+The first argument given to `Text` (`{name: "firstName", ...}`) are consumed by `createInput` and are used to generate the `helpers`/`state`/`actions` properties.
 
 * `name`: is the name given to the form.
   * it is *crucial* that this is in camelcase in order to generate the proper title case, snake case, etc.. Make sure you communicate this to the consumer of your form library.
   * this is required
 * `validate`: should be a function that takes the form value and outputs an array of errors.
-  * not required (will just not validate anything)
-  * works very will with the [`@zecos/validators`](https://npmjs.org/@zecos/validators`) library
+  * not required (if no validation is required)
+  * works very will with the [`@zecos/validate`](/general/validate) library
 * `init`: initial value for the field
   * default is `""` (empty string)
   * if your input requires a number, make sure to change `""` to 0, likewise with other types `""` would be invalid for.
 * `props`: initial properties for the field
   * these can be overriden by props passed to the generated component
-  * these cannot be changed (at the moment, [open an issue](https://github.com/zecos/input/issues/new) if this is crucial for you)
+  * these cannot be changed after initiation (at the moment, [open an issue](https://github.com/zecos/input/issues/new) if this is crucial for you)
 
 ### Select Example
 
@@ -80,3 +82,39 @@ example:0030_create-input-select
 ```
 
 Here, you can see we can either pass options through the initializer or through the props of the React component, and we can let our component decide which one to use.
+
+### What it looks like for the consumer
+
+So, let's say that your user has passed in his options to your input creator, what does he get back?
+
+He would get an object with the following properties:
+
+* `Cmpt`: The input component
+* `state`: The same `state` that you were passed
+* `actions`: The same `actions` that you were passed
+* `meta`:
+  * just an object with the information that it is a input
+  * it looks like this `{$$__input_type: 'input'}`
+* `name`: the original `name` option passed to the input
+* `display`:
+  * displays the data in a react component
+  * mostly for debugging purposes
+  * can pass `{full: true}` to get full state information
+* `log`:
+  * logs the input data to the console
+  * can pass `{full: true}` to get full state information
+* `[UpperCamelName]`:
+  * same thing as `Cmpt`
+  * for convenience and namespacing
+  * You don't want a million components called `Cmpt`
+  * but you also want to be able to get the component without knowing its name
+* `[name + "State"]`
+  * same thing as `state`
+  * if the `name` were `firstName`, then `[name + "State"]` would be `"myformState"`
+* `[name + "Meta"]`: ...
+* `[name + "Actions"]`: ...
+* `[name + "Helpers"]`: ....
+* `[UpperCamelName + "Display"]`: ...
+* `["log" + UpperCamelName]`: ...
+
+And that's it. I would put the example here again, but that wouldn't be DRY (don't repeat yourself). Feel free to scroll up though. For more examples, checkout the [@zecos/input-basic code](https://github.com/zecos/input-basic).

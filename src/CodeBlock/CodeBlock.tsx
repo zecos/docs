@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { examples } from '../examples/index'
 import styles from './CodeBlock.module.css'
+import './CodeBlock.css'
 import 'prismjs'
 // import 'prismjs/themes/prism-tomorrow.css';
 // import 'prism-themes/themes/prism-darcula.css'

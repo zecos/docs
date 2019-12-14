@@ -47,3 +47,7 @@ main {
 main ul {
   line-height: 1.7;
 }
+
+.white {
+  color: white;
+}

@@ -14,7 +14,9 @@ example:0000_overview
 
 That is an overly simplified example without any data validation, but you see how simple creating an input can be.
 
-But this along with other features of the `@zecos/input` family can be composed to build powerful UI tools. It is also easy to export your UI library for others to use or utilize someone else's. I have created two so far:
+But this along with other features of the `@zecos/input` family can be composed to build powerful UI tools.
+
+It is also easy to export your UI library for others to use or utilize someone else's. I have created two so far:
 
 * [@zecos/input-basic](/input-basic)
 * [@zecos/input-mui](/input-mui).
