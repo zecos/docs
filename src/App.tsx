@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import {Remarkable} from 'remarkable'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, createContext, useContext } from 'react'
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -17,27 +16,17 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ReactMarkdown from 'react-markdown'
 import './App.css'
 import {
-  BrowserRouter as Router,
-  Switch,
   Route,
+  Switch,
   Link,
-  BrowserRouter
+  useLocation,
 } from "react-router-dom"
-import overview from "./pages/overview.md"
-import createInputPage from "./pages/input/create-input.md"
-import createLayoutPage from "./pages/input/create-layout.md"
-import createMultiPage from "./pages/input/create-multi.md"
-import fieldPage from './pages/general/field.md'
-import inputMuiPage from './pages/ui-libraries/input-mui.md'
-import inputBasicPage from './pages/ui-libraries/input-basic.md'
-import inputPickerPage from './pages/ui-libraries/input-picker.md'
-import inputOverviewPage from './pages/input/overview.md'
-import uiOverviewPage from './pages/ui-libraries/overview.md'
-import validatePage from './pages/general/validate.md'
 import ScrollMemory from 'react-router-scroll-memory'
-import {theme} from "./theme"
 import clsx from 'clsx'
 import { CodeBlock } from './CodeBlock/CodeBlock';
+import { routes } from './routes';
+
+const HistoryContext = createContext(({} as any))
 
 const memoize = fn => {
   const cache = {}
@@ -55,6 +44,11 @@ const memoize = fn => {
 
 const getMd = (file: string) => () => {
   const [cmpt, setCmpt] = useState(<div>Loading...</div>)
+  const {page, setPage} = useContext(HistoryContext)
+  const pathname = (window as any).location.pathname
+  if (page !== pathname && typeof setPage === "function") {
+    setPage(pathname)
+  }
   useEffect(() => {
     (async () => {
       try {
@@ -151,6 +145,33 @@ const useStyles = makeStyles((theme: Theme) =>
       '&:hover': {
         backgroundColor: '#3B4252',
       }
+    },
+    navLinks: {
+      width: '100%',
+      display: 'flex',
+      flexFlow: 'row wrap',
+      fontSize: "60px",
+    },
+    navRight: {
+      flex: '0 0 0',
+      textAlign: 'center',
+      width: 100,
+      paddingRight: 40,
+    },
+    navLeft: {
+      flex: '0 0 0',
+      textAlign: 'center',
+      width: 100,
+      paddingLeft: 40,
+    },
+    largeFont: {
+      fontSize: '40px',
+    },
+    navSeparator: {
+      flex: '1 0 0'
+    },
+    menuCurrent: {
+      background: '#3B4252',
     }
   }),
 )
@@ -160,13 +181,17 @@ if (typeof localStorage !== "undefined"
     lsMenuOpen = JSON.parse(localStorage["menu-open"])
 }
 
-const renderMenuLink = ({title, link, code}) => (
-  <Link to={link} key={link}>
-    <ListItem button>
-    <ListItemText primary={code ? <code>{title}</code> : title} />
-    </ListItem>
-  </Link>
-)
+const renderMenuLink = ({title, link, code}) => {
+  const location = useLocation()
+  const classes = useStyles()
+  return (
+    <Link to={link} key={link}>
+      <ListItem button className={link ===  location.pathname ? classes.menuCurrent : ""} >
+      <ListItemText primary={code ? <code>{title}</code> : title} />
+      </ListItem>
+    </Link>
+  )
+}
 
 const renderSection = ({name, children}, i) => (
   <span key={name || i}>
@@ -182,75 +207,57 @@ const renderSection = ({name, children}, i) => (
   </span>
 )
 
+const pageToNextMap = ({} as any)
+const pageToPrevMap = ({} as any)
+routes
+  .reduce((acc, cur) => {
+    return acc.concat((cur as any).children.map(({link}) => link))
+  }, [])
+  .forEach((cur, i, arr) => {
+    if (arr.length - 1 !== i) {
+      pageToNextMap[cur] = arr[i + 1]
+    }
+    if (i !== 0) {
+      pageToPrevMap[cur] = arr[i - 1]
+    }
+  })
+  
+
+const getCmpt = (url) => {
+  const classes:any = useStyles()
+  return (
+    <>
+    <ScrollMemory />
+    {React.createElement(getMd(url))}
+    <div className={classes.navLinks}>
+    <div className={classes.navLeft}>
+      <Link to={pageToPrevMap[url]}>
+        <IconButton className={classes.largeFont}>
+          <ChevronLeftIcon fontSize="inherit" className={classes.chevron} />
+        </IconButton>
+      </Link>
+    </div>
+    <div className={classes.navSeparator} />
+    <div className={classes.navRight}>
+      <Link to={pageToNextMap[url]}>
+        <IconButton className={classes.largeFont}>
+          <ChevronRightIcon fontSize="inherit" className={classes.chevron} />
+        </IconButton>
+      </Link>
+    </div>
+    </div>
+    </>
+  )
+}
 const renderSectionRoutes = ({children}) => children.map(renderRoute)
 const renderRoute = ({cmpt, link}) => {
   return <Route exact path={link}>
-    {React.createElement(getMd(cmpt))}
+    {getCmpt(cmpt)}
   </Route>
 }
-  const sections = [{
-    name: "",
-    children: [{
-      title: "Overview",
-      link: "/",
-      cmpt: overview,
-    }]
-  }, {
-    name: "@zecos/input",
-    children: [{
-      title: "Overview",
-      code: false,
-      link: "/input/overview",
-      cmpt: inputOverviewPage,
-    }, {
-      title: "createInput",
-      code: false,
-      link: "/input/create-input",
-      cmpt: createInputPage,
-    }, {
-      title: "createLayout",
-      link: "/input/create-layout",
-      cmpt: createLayoutPage,
-      code: false,
-    }, {
-      title: "createMulti",
-      link: "/input/create-multi",
-      cmpt: createMultiPage,
-      code: false,
-    }],
-  }, {
-    name: "UI Libraries",
-    children: [{
-        title: "Overview",
-        link: "/ui-libraries/overview",
-        cmpt: uiOverviewPage,
-      }, {
-      title: "@zecos/input-basic",
-      link: "/ui-libraries/input-basic",
-      cmpt: inputBasicPage,
-    }, {
-      title: "@zecos/input-mui",
-      link: "/ui-libraries/input-mui",
-      cmpt: inputMuiPage,
-    }, {
-      title: "@zecos/input-picker",
-      link: "/ui-libraries/input-picker",
-      cmpt: inputPickerPage,
-    }]
-  }, {
-    name: "General",
-    children: [{
-      title: "@zecos/field",
-      link: "/field",
-      cmpt: fieldPage,
-    }, {
-      title: "@zecos/validate",
-      link: "/validate",
-      cmpt: validatePage,
-    }]
-  }]
 
-function App() {
+
+const App = () => {
   const [menuOpen, setMenuOpen] = useState(lsMenuOpen)
   const toggleMenuOpen = () => {
     localStorage["menu-open"] = !menuOpen
@@ -258,10 +265,9 @@ function App() {
   }
   const classes = useStyles()
   
+  
   return (
-    <ThemeProvider theme={theme}>
-    <BrowserRouter>
-      <ScrollMemory />
+    <div>
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
@@ -300,7 +306,7 @@ function App() {
           </IconButton>
         </div>
       <List>
-        {sections.map(renderSection)}
+        {routes.map(renderSection)}
       </List>
       </Drawer>
       <div className={classes.drawerHeader} />
@@ -310,11 +316,10 @@ function App() {
         })}
       >
         <Switch>
-          {sections.map(renderSectionRoutes)}
+          {routes.map(renderSectionRoutes)}
         </Switch>
       </main>
-    </BrowserRouter>
-    </ThemeProvider>
+    </div>
   )
 }
 
