@@ -35,21 +35,30 @@ import inputOverviewPage from './pages/input/overview.md'
 import uiOverviewPage from './pages/ui-libraries/overview.md'
 import validatePage from './pages/general/validate.md'
 import ScrollMemory from 'react-router-scroll-memory'
-
 import {theme} from "./theme"
-
 import clsx from 'clsx'
 import { CodeBlock } from './CodeBlock/CodeBlock';
-const md = new Remarkable
 
+const memoize = fn => {
+  const cache = {}
+  return (...args) => {
+    const key = JSON.stringify(args)
+    if (cache[key]) {
+      return cache[key]
+    }
+    return cache[key] = fn(...args)
+  }
+}
+ const getMDText = memoize((file) => {
+  return fetch(file).then(res => res.text()) 
+})
 
-const getMd = (file: string) => {
+const getMd = (file: string) => () => {
   const [cmpt, setCmpt] = useState(<div>Loading...</div>)
   useEffect(() => {
     (async () => {
       try {
-        const text = await fetch(file).then(res => res.text())
-        const cmpt = <div dangerouslySetInnerHTML={md.render(text)} />
+        const text = await getMDText(file)
         setCmpt(<ReactMarkdown
           source={text}
           renderers={{
@@ -71,6 +80,7 @@ const getMd = (file: string) => {
   }, [file])
   return cmpt
 }
+
 const drawerWidth = 240
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -175,9 +185,70 @@ const renderSection = ({name, children}, i) => (
 const renderSectionRoutes = ({children}) => children.map(renderRoute)
 const renderRoute = ({cmpt, link}) => {
   return <Route exact path={link}>
-    {cmpt}
+    {React.createElement(getMd(cmpt))}
   </Route>
 }
+  const sections = [{
+    name: "",
+    children: [{
+      title: "Overview",
+      link: "/",
+      cmpt: overview,
+    }]
+  }, {
+    name: "@zecos/input",
+    children: [{
+      title: "Overview",
+      code: false,
+      link: "/input/overview",
+      cmpt: inputOverviewPage,
+    }, {
+      title: "createInput",
+      code: false,
+      link: "/input/create-input",
+      cmpt: createInputPage,
+    }, {
+      title: "createLayout",
+      link: "/input/create-layout",
+      cmpt: createLayoutPage,
+      code: false,
+    }, {
+      title: "createMulti",
+      link: "/input/create-multi",
+      cmpt: createMultiPage,
+      code: false,
+    }],
+  }, {
+    name: "UI Libraries",
+    children: [{
+        title: "Overview",
+        link: "/ui-libraries/overview",
+        cmpt: uiOverviewPage,
+      }, {
+      title: "@zecos/input-basic",
+      link: "/ui-libraries/input-basic",
+      cmpt: inputBasicPage,
+    }, {
+      title: "@zecos/input-mui",
+      link: "/ui-libraries/input-mui",
+      cmpt: inputMuiPage,
+    }, {
+      title: "@zecos/input-picker",
+      link: "/ui-libraries/input-picker",
+      cmpt: inputPickerPage,
+    }]
+  }, {
+    name: "General",
+    children: [{
+      title: "@zecos/field",
+      link: "/field",
+      cmpt: fieldPage,
+    }, {
+      title: "@zecos/validate",
+      link: "/validate",
+      cmpt: validatePage,
+    }]
+  }]
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(lsMenuOpen)
@@ -186,67 +257,6 @@ function App() {
     setMenuOpen(!menuOpen)
   }
   const classes = useStyles()
-  const sections = [{
-    name: "",
-    children: [{
-      title: "Overview",
-      link: "/",
-      cmpt: getMd(overview),
-    }]
-  }, {
-    name: "@zecos/input",
-    children: [{
-      title: "Overview",
-      code: false,
-      link: "/input/overview",
-      cmpt: getMd(inputOverviewPage),
-    }, {
-      title: "createInput",
-      code: false,
-      link: "/input/create-input",
-      cmpt: getMd(createInputPage),
-    }, {
-      title: "createLayout",
-      link: "/input/create-layout",
-      cmpt: getMd(createLayoutPage),
-      code: false,
-    }, {
-      title: "createMulti",
-      link: "/input/create-multi",
-      cmpt: getMd(createMultiPage),
-      code: false,
-    }],
-  }, {
-    name: "UI Libraries",
-    children: [{
-        title: "Overview",
-        link: "/ui-libraries/overview",
-        cmpt: getMd(uiOverviewPage),
-      }, {
-      title: "@zecos/input-basic",
-      link: "/ui-libraries/input-basic",
-      cmpt: getMd(inputBasicPage),
-    }, {
-      title: "@zecos/input-mui",
-      link: "/ui-libraries/input-mui",
-      cmpt: getMd(inputMuiPage),
-    }, {
-      title: "@zecos/input-picker",
-      link: "/ui-libraries/input-picker",
-      cmpt: getMd(inputPickerPage),
-    }]
-  }, {
-    name: "General",
-    children: [{
-      title: "@zecos/field",
-      link: "/field",
-      cmpt: getMd(fieldPage),
-    }, {
-      title: "@zecos/validate",
-      link: "/validate",
-      cmpt: getMd(validatePage),
-    }]
-  }]
   
   return (
     <ThemeProvider theme={theme}>
