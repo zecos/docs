@@ -40,7 +40,7 @@ export const CodeBlock = ({language, value}) => {
       <HL language={language}>
         {value}
       </HL>
-      <h3 className={styles.resultHeading}>Result</h4>
+      <h3 className={styles.resultHeading}>Result</h3>
       <div className={styles.result}>
         <Cmpt />
       </div>

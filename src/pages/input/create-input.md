@@ -1,22 +1,22 @@
-### @zecos/input
+## @zecos/input
 
 `@zecos/input` is a library for quickly creating React UI components with little to no boilerplate.
 
-#### Installation
+### Installation
 
 `yarn add @zecos/input`
 
 `npm i -S @zecos/input`
 
-#### Example
+### Example
 
 ```tsx
 example:0020_create-input
 ```
 
-For full example, see [@zecos/inputs-basic](https://github.com/zecos/inputs-basic), or better yet, fork it and create your own UI!
+For full example, see [the @zecos/input-basic code](https://github.com/zecos/input-basic/blob/master/src/input-creators/Text.tsx), or better yet, fork it and create your own UI!
 
-#### How it works
+### How it works
 
 `createInput` takes a functional component that takes an object with the following properties:
 
@@ -39,18 +39,15 @@ For full example, see [@zecos/inputs-basic](https://github.com/zecos/inputs-basi
   * `aria-label`: the form name in title case (for convenience)
   * `handleChange`: a function that sets the field value to the event's target value
   * `handleBlur`: a function that sets the field's `touched` property to `true`
-  * `value`: value of the field 
   * `label`: the form name in title case (for convenience)
   * `name`: the form name in snake case (for convenience)
   * `htmlFor`: same as `name`
   * `id`: the form name in snake case (for convenience)
-* `args`: arguments passed after the `inputs` options
-  * so in our example, after `{name: "firstName", ...}` you could pass additional arguments that would show up here.
-
+  
 The user is then passed your input, along with the form state and actions:
 
 ```ts
-const [FirstName, firstNameState, firstNameActions] = text({
+const {FirstName, firstNameState, firstNameActions} = Text({
   name: "firstName",
   validate: nameValidator,
   init: "Bob",
@@ -59,10 +56,10 @@ const [FirstName, firstNameState, firstNameActions] = text({
 
 The user can read all the values you can from `state` or perform any of the actions you can with `actions`, and each time your form will be rerendered. This gives you all the benefits of customization and and convenience of automatic generation.
 
-The first argument given to `text` (`{name: "firstName", ...}`) are consumed by `inputs` and are used to generated the `helpers`/`state`/`actions` properties.
+The first argument given to `Text` (`{name: "firstName", ...}`) are consumed by `inputs` and are used to generate the `helpers`/`state`/`actions` properties.
 
 * `name`: is the name given to the form.
-  * it is *crucial* that this is in camelcase in order to generate the proper title case, snake case, etc.. Make sure you communicate this to your user.
+  * it is *crucial* that this is in camelcase in order to generate the proper title case, snake case, etc.. Make sure you communicate this to the consumer of your form library.
   * this is required
 * `validate`: should be a function that takes the form value and outputs an array of errors.
   * not required (will just not validate anything)
@@ -71,85 +68,15 @@ The first argument given to `text` (`{name: "firstName", ...}`) are consumed by 
   * default is `""` (empty string)
   * if your input requires a number, make sure to change `""` to 0, likewise with other types `""` would be invalid for.
 * `props`: initial properties for the field
-  * these can be overriden by props passed to the component
+  * these can be overriden by props passed to the generated component
   * these cannot be changed (at the moment, [open an issue](https://github.com/zecos/input/issues/new) if this is crucial for you)
 
-#### Select Example
+### Select Example
 
 To demonstrate the power an flexibility of these options, let's take a look at a select input.
 
 ```tsx
-// select.tsx
-
-const renderOption = ([key, label]) => {
-  return (
-    <option key={key} value={key}>
-      {label}
-    </option>
-  )
-}
-
-export const select = createInput(({helpers, props}) => {
-  const {
-    id,
-    name,
-    value,
-    handleChange,
-    handleBlur,
-    label,
-    htmlFor,
-  } = helpers
-
-  return (
-    <div>
-      <label className={styles.label} htmlFor={htmlFor}>
-        {label}
-      </label>
-      <select
-        className={styles.selectGroup}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        name={name}
-        id={id}
-        value={value}
-        aria-label={label}
-      >
-        {Object.entries((args[0] && args[0].options) || props.options).map(renderOption)}
-      </select>
-    </div>
-  )
-})
-```
-
-```tsx
-// Form.tsx
-
-import React from "react"
-import { nameValidator } from "@zecos/validators"
-import { text } from "./text"
-
-export const Form = () => {
-  const [FavoriteColor, favoriteColorState] = select({
-    init: "blue",
-    name: "favoriteColor",
-  }, {options={{green: "Green", blue: "Blue"}}})
-
-  return (
-    <form className="form">
-      <FavoriteColor options={{blue: "Blue", red: "Red"}}/>
-      Favorite Color: {favoriteColorState.value}
-      
-    </form>
-  )
-}
+example:0030_create-input-select
 ```
 
 Here, you can see we can either pass options through the initializer or through the props of the React component, and we can let our component decide which one to use.
-
-#### Conclusion 
-
-You can imagine how this can be used to create powerful, scalable UI components.
-
-The flexibility and lack of boilerplate of this library will allow you to rapidly implement changes to your entire UI, and you're not stuck with one look like Material Design, bootstrap, or any other UI library. But you *can* still use those if you want. You get the best of both worlds.
-
-So, create your UI library and share it with the world or with your team!
