@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import {Remarkable} from 'remarkable'
 import React, { useEffect, useState } from 'react'
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -26,19 +27,20 @@ import overview from "./pages/overview.md"
 import createInputPage from "./pages/input/create-input.md"
 import createLayoutPage from "./pages/input/create-layout.md"
 import createMultiPage from "./pages/input/create-multi.md"
-import fieldPage from './pages/field.md'
+import fieldPage from './pages/general/field.md'
 import inputMuiPage from './pages/ui-libraries/input-mui.md'
 import inputBasicPage from './pages/ui-libraries/input-basic.md'
 import inputPickerPage from './pages/ui-libraries/input-picker.md'
 import inputOverviewPage from './pages/input/overview.md'
 import uiOverviewPage from './pages/ui-libraries/overview.md'
-import validatePage from './pages/validate.md'
+import validatePage from './pages/general/validate.md'
 import ScrollMemory from 'react-router-scroll-memory'
 
 import {theme} from "./theme"
 
 import clsx from 'clsx'
 import { CodeBlock } from './CodeBlock/CodeBlock';
+const md = new Remarkable
 
 
 const getMd = (file: string) => {
@@ -47,6 +49,7 @@ const getMd = (file: string) => {
     (async () => {
       try {
         const text = await fetch(file).then(res => res.text())
+        const cmpt = <div dangerouslySetInnerHTML={md.render(text)} />
         setCmpt(<ReactMarkdown
           source={text}
           renderers={{
@@ -73,7 +76,7 @@ const drawerWidth = 240
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     white: {
-      color: "white",
+      color: "#D8DEE9",
     },
     root: {
       display: 'flex',
@@ -104,7 +107,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     drawerPaper: {
       width: drawerWidth,
-      background: '#3B4252',
+      background: '#2E3440',
       color: '#8FBCBB',
     },
     drawerHeader: {
@@ -131,6 +134,14 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
       marginLeft: drawerWidth,
     },
+    chevron: {
+      color: "#D8DEE9"
+    },
+    chevronBackground: {
+      '&:hover': {
+        backgroundColor: '#3B4252',
+      }
+    }
   }),
 )
 let lsMenuOpen = true
@@ -253,9 +264,9 @@ function App() {
             aria-label="menu"
             onClick={toggleMenuOpen}
             edge="start"
-            className={clsx(classes.menuButton, menuOpen && classes.hide)}
+            className={clsx(classes.menuButton, menuOpen && classes.hide, classes.chevronBackground)}
           >
-            <MenuIcon />
+            <MenuIcon className={classes.chevron} />
           </IconButton>
           <Link to="/">
             <Typography variant="h6" noWrap>
@@ -274,8 +285,8 @@ function App() {
         }}
       >
         <div className={classes.drawerHeader}>
-          <IconButton onClick={toggleMenuOpen}>
-            <ChevronLeftIcon />
+          <IconButton onClick={toggleMenuOpen} className={classes.chevronBackground}>
+            <ChevronLeftIcon className={classes.chevron} />
           </IconButton>
         </div>
       <List>

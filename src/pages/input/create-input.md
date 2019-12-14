@@ -1,4 +1,4 @@
-## @zecos/input
+## @zecos/input - `createInput`
 
 `@zecos/input` is a library for quickly creating React UI components with little to no boilerplate.
 
@@ -14,7 +14,7 @@
 example:0020_create-input
 ```
 
-For full example, see [the @zecos/input-basic code](https://github.com/zecos/input-basic/blob/master/src/input-creators/Text.tsx), or better yet, fork it and create your own UI!
+For full example, see the [@zecos/input-basic code](https://github.com/zecos/input-basic/blob/master/src/input-creators/Text.tsx), or better yet, fork it and create your own UI!
 
 ### How it works
 
