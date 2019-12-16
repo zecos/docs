@@ -17,5 +17,11 @@ export const examples = {
   },"0050_create-multi": {
     cmpt: require('./0050_create-multi'),
     content: "import React from 'react'\nimport { TextInput, SimpleFormLayout } from '@zecos/input-mui'\nimport { Button } from '@material-ui/core'\nimport { validateName } from '@zecos/validate'\nimport { createMulti } from '@zecos/input'\n\n\nconst Multi:any = createMulti(({items}) => {\n  return <>\n    {items.map((Input, i) => <Input.Cmpt key={i} />)}\n  </>\n})\n\nconst newSimple = () => SimpleFormLayout({\n  name: 'form',\n  items: [\n    TextInput({\n      validate: validateName,\n      name: \"firstName\"\n    }),\n    TextInput({\n      validate: validateName,\n      name: \"lastName\",\n    }),\n  ],\n})\n\nconst MultiForm = () => {\n  const {actions, FirstNames} = Multi({\n    init: [\n      newSimple()\n    ],\n    name: \"firstNames\",\n  })\n  \n  return <div>\n      <FirstNames />\n      <Button variant=\"contained\" onClick={() => actions.push(newSimple)}>Add Name</Button>\n    </div>\n}\n\n\nexport default MultiForm"
+  },"0060_text-input": {
+    cmpt: require('./0060_text-input'),
+    content: "import React from \"react\"\nimport { validateName } from \"@zecos/validate\"\nimport { TextInput} from \"@zecos/input-mui\"\n\nconst TextInputExample = () => {\n  const {FirstName, FirstNameDisplay} = TextInput({\n    validate: validateName,\n    init: '',\n    name: \"firstName\"\n  })\n\n  return (\n    <>\n    <form className=\"form\">\n      <FirstName />\n      <FirstNameDisplay />\n    </form>\n    <br />\n    {/* display the data */}\n    </>\n  )\n}\n \nexport default TextInputExample"
+  },"0070_select-input": {
+    cmpt: require('./0070_select-input'),
+    content: "import React from \"react\"\nimport { SelectInput } from \"@zecos/input-mui\"\n\nconst SelectInputExample = () => {\n  const {FavoriteColor, FavoriteColorDisplay} = SelectInput({\n    init: \"blue\",\n    name: \"favoriteColor\",\n  })\n\n  return (\n    <>\n    <form className=\"form\">\n      <FavoriteColor />\n      <FavoriteColorDisplay />\n    </form>\n    <br />\n    {/* display the data */}\n    </>\n  )\n}\n \nexport default SelectInputExample\n"
   }
 }

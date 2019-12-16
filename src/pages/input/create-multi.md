@@ -79,7 +79,9 @@ const Multi:any = createMulti(({items}) => {
 })
 ```
 
-You can see this is very simple, it just returns the inputs essentially. All the other work is down for you. However, you could make this as complicated or as simple as you wanted.
+I've gone ahead and started using inputs from [`@zecos/input-mui`](/input/input-mui), because if I created everything from scratch, that example would be a whole lot longer, and we've already covered that anyway.
+
+You can see this example is very simple, it just returns the inputs essentially. All the other work is down for you. However, you could make this as complicated or as simple as you wanted.
 
 The `createMulti` function gets an array of items that could be either inputs or layouts. And down below, we can see the consumer of `Multi` gets an object which contains the actions, and we use `actions.push` to add new items to the list.
 
@@ -144,7 +146,7 @@ The consumer receives properties much like in [`createInput`](/input/create-inpu
 
 * `Cmpt`: The multi component
 * `items`: The same items that were passed to you
-* `actiosn`: The same actions that were passed to you
+* `actions`: The same actions that were passed to you
 * `errors`: The same errors that were passed to you
 * `meta`:
   * just an object with the information that it is a `multi`
@@ -170,3 +172,5 @@ The consumer receives properties much like in [`createInput`](/input/create-inpu
 * `[name + "Helpers"]`: ....
 * `[UpperCamelName + "Display"]`: ...
 * `["log" + UpperCamelName]`: ...
+
+And that's a wrap for the `multi`s. No go forth and `multi`ply.

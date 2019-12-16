@@ -42,6 +42,35 @@ const memoize = fn => {
   return fetch(file).then(res => res.text()) 
 })
 
+const textToNamedAnchor = text => {
+  const name = text.replace(/[^A-Za-z0-9 ]/g, "")
+    .replace(" ", "_")
+    .toLowerCase()
+  return <a id={name}>{text}</a>
+}
+
+declare var history: any;
+declare var location: any;
+
+const scrollToId = (id) => {
+  const el = document.querySelector(id)
+  if (el) {
+    if (history.pushState) {
+      history.pushState(null, null, id);
+    }
+    else {
+      location.hash = id;
+    }
+    window.scrollTo(0, el.getBoundingClientRect().y - 80)
+  }
+}
+
+function flatten(text, child) {
+  return typeof child === 'string'
+    ? text + child
+    : React.Children.toArray(child.props.children).reduce(flatten, text)
+}
+
 const getMd = (file: string) => () => {
   const [cmpt, setCmpt] = useState(<div>Loading...</div>)
   const {page, setPage} = useContext(HistoryContext)
@@ -62,9 +91,25 @@ const getMd = (file: string) => () => {
               const label = el.children[0].props.value
               if (href.startsWith('/')) {
                 return <Link to={href}>{label}</Link>
+              } else if (href.startsWith('#')) {
+                return <a
+                  href={href}
+                  onClick={e => {
+                    e.preventDefault()
+                    scrollToId(href)
+                  }}
+                >
+                  {label}
+                </a>
               }
               return <a href={href}>{label}</a>
             },
+            heading: (props) => {
+              const children = React.Children.toArray(props.children)
+              const text = children.reduce(flatten, '')
+              const slug = text.toLowerCase().replace(/\W/g, '-')
+              return React.createElement('h' + props.level, {id: slug}, props.children)
+            }
           }}
         />)
       } catch {
@@ -228,7 +273,6 @@ const getCmpt = (url) => {
   const { pathname } = useLocation()
   return (
     <>
-    <ScrollMemory />
     {React.createElement(getMd(url))}
     <div className={classes.navLinks}>
     <div className={classes.navLeft}>
@@ -265,6 +309,13 @@ const App = () => {
     setMenuOpen(!menuOpen)
   }
   const classes = useStyles()
+  // useEffect(() => {
+  //   if (window.location.hash) {
+  //     setTimeout(() => {
+  //       scrollToId(window.location.hash)
+  //     }, 0)
+  //   }
+  // }, [])
   
   
   return (
@@ -312,14 +363,18 @@ const App = () => {
       </List>
       </Drawer>
       <div className={classes.drawerHeader} />
+      <ScrollMemory />
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: menuOpen,
         })}
       >
+        <a href="#inputs">Go To MyName</a>
         <Switch>
           {routes.map(renderSectionRoutes)}
         </Switch>
+        // @ts-ignore
+        <a id="inputs">My Name</a>
       </main>
     </div>
   )
