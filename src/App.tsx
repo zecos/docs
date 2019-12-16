@@ -42,13 +42,6 @@ const memoize = fn => {
   return fetch(file).then(res => res.text()) 
 })
 
-const textToNamedAnchor = text => {
-  const name = text.replace(/[^A-Za-z0-9 ]/g, "")
-    .replace(" ", "_")
-    .toLowerCase()
-  return <a id={name}>{text}</a>
-}
-
 declare var history: any;
 declare var location: any;
 
@@ -61,7 +54,7 @@ const scrollToId = (id) => {
     else {
       location.hash = id;
     }
-    window.scrollTo(0, el.getBoundingClientRect().y - 80)
+    window.scrollTo(0, el.getBoundingClientRect().top - 80)
   }
 }
 
@@ -308,14 +301,34 @@ const App = () => {
     localStorage["menu-open"] = !menuOpen
     setMenuOpen(!menuOpen)
   }
+  const scrollPositionName = `scrollposition.${location.href}`
+  
   const classes = useStyles()
-  // useEffect(() => {
-  //   if (window.location.hash) {
-  //     setTimeout(() => {
-  //       scrollToId(window.location.hash)
-  //     }, 0)
-  //   }
-  // }, [])
+  const listener = _ => {
+    const bodyOffset = document.body.getBoundingClientRect().y
+    if (typeof localStorage !== "undefined") {
+      localStorage[scrollPositionName] = -bodyOffset
+    }
+  }
+  
+  useEffect(() => {
+    window.addEventListener("scroll", listener)
+    const savedPosition = localStorage[scrollPositionName]
+    if (savedPosition) {
+      setTimeout(() => {
+        window.scrollTo(0, savedPosition)
+      }, 0)
+    } else {
+      if (window.location.hash) {
+        setTimeout(() => {
+          scrollToId(window.location.hash)
+        }, 0)
+      }
+    }
+    return () => {
+      window.removeEventListener("scroll", listener)
+    }
+  }, [])
   
   
   return (
@@ -363,18 +376,14 @@ const App = () => {
       </List>
       </Drawer>
       <div className={classes.drawerHeader} />
-      <ScrollMemory />
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: menuOpen,
         })}
       >
-        <a href="#inputs">Go To MyName</a>
         <Switch>
           {routes.map(renderSectionRoutes)}
         </Switch>
-        // @ts-ignore
-        <a id="inputs">My Name</a>
       </main>
     </div>
   )
