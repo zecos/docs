@@ -1834,10 +1834,10 @@
     "@zecos/fieldz" "^0.0.8"
     date-fns "^2.0.0-beta.5"
 
-"@zecos/input@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@zecos/input/-/input-0.0.5.tgz#02531ace5c4885e5742f689e059c0a3c3f343638"
-  integrity sha512-uqdxHrRI1BxAIwoHMiHIPtoibBTR9xWI25Aw/ZFWPgl6ryh5gpw/grR5jGJOlj33TImJXWm15aeb/Epvv0n5zw==
+"@zecos/input@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@zecos/input/-/input-0.0.8.tgz#711303542cf18fa98e836a65a6cb50d35e619ef3"
+  integrity sha512-ycT9H8Oo7Mp3qpKT2N5DOGI+DKoElM02p1CDtAqqkvRfHHk8F3X/3kZXRRDYHV+3ZiiRYaNzq44Rt1AzaE20MA==
   dependencies:
     "@zecos/fieldz" "^0.0.8"
 

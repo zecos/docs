@@ -96,7 +96,7 @@ He would get an object with the following properties:
   * just an object with the information that it is a input
   * it looks like this `{$$__input_type: 'input'}`
 * `name`: the original `name` option passed to the input
-* `display`:
+* `Display`:
   * displays the data in a react component
   * mostly for debugging purposes
   * can pass `{full: true}` to get full state information
