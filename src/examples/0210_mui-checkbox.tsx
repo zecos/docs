@@ -1,8 +1,8 @@
 import React from 'react'
-import { Checkbox } from '@zecos/input-basic'
+import { CheckboxInput } from '@zecos/input-mui'
 
 const Example = () => {
-  const { Cool, CoolDisplay } = Checkbox({
+  const { Cool, CoolDisplay } = CheckboxInput({
     init: true,
     name: "cool",
     label: "I am cool",

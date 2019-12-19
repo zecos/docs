@@ -17,6 +17,18 @@ There are several Input UI components, although, there will be more added in the
 * [`SimpleFormLayout`](#simpleformlayout)
 * [`Multi`](#multi)
 
+### Installation
+
+```shell
+yarn add @zecos/input @zecos/material-ui @material-ui/core
+```
+
+or
+
+```shell
+npm i -S @zecos/input @zecos/material-ui @material-ui/core
+```
+
 ### Text
 
 `Text` is the most basic form input that `@zecos/input-basic` provides. It's simply a text field. There's not much to say other than that.

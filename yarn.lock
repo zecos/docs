@@ -1518,7 +1518,7 @@
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
 
-"@types/prop-types@*", "@types/prop-types@^15.7.3":
+"@types/prop-types@*":
   version "15.7.3"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
@@ -1824,20 +1824,15 @@
   resolved "https://registry.yarnpkg.com/@zecos/input-basic/-/input-basic-0.0.4.tgz#643c39b59d0328861e19456495c3aa86fe2de020"
   integrity sha512-XKJPISeXcU35k5v9R5UcMmIhAtwe/LoiqBBVa+WktYbDvzmuxtZ588nsy6gHQRW+QFOhqeTb3IcNBdl+qG23PQ==
 
-"@zecos/input-mui@^0.0.0":
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/@zecos/input-mui/-/input-mui-0.0.0.tgz#a25199a4604b66f7f811fb6f0e00d73aaf993309"
-  integrity sha512-IYytM/gQmW7wFT2tzJ89oH4veUbysxCkPns/GV+Y/9qIoAgXDkBmaldKLsz7HfIaH4+fxwdPUAc/t9XCLMo3lA==
-  dependencies:
-    "@material-ui/types" "^4.1.1"
-    "@types/prop-types" "^15.7.3"
-    "@zecos/fieldz" "^0.0.8"
-    date-fns "^2.0.0-beta.5"
+"@zecos/input-mui@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@zecos/input-mui/-/input-mui-0.0.11.tgz#0890b6dc202b825098398e3b55400a3f8bd1d841"
+  integrity sha512-Ht5sY96Bf/onfFxxFG0veGFVXkgFEe6ZCQ8xBQlvWnyzmK2oIWsPiRjP25UTRYbGfBRlUC/vizCCG6MuHYrBdw==
 
-"@zecos/input@^0.0.15":
-  version "0.0.15"
-  resolved "https://registry.yarnpkg.com/@zecos/input/-/input-0.0.15.tgz#03a91f15a974ff34ee316e75c1e299431a008ed4"
-  integrity sha512-sJUXNNRcVby0fUA/SOdI2y9GbOTzFpK+y25e2ZAn14jaSGzLGi//Eo0pJV3NA6O2D9ynesGiS0zjV0761Yn7sQ==
+"@zecos/input@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/@zecos/input/-/input-0.0.16.tgz#88484127f15494db8a8ebbee7d00ddb60d549d0b"
+  integrity sha512-aQxbWD40eeJIdB9xY+TTe9y6k80ACLKtDX6X90LK1raCwxYv5Sgv3I/jFFhIWSXoY2PJUexkjbSxm63FGrYyYw==
   dependencies:
     "@zecos/fieldz" "^0.0.8"
 
