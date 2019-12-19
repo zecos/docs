@@ -42,6 +42,14 @@ const memoize = fn => {
   return fetch(file).then(res => res.text()) 
 })
 
+const getBodyHeight = () => {
+  const body = document.body
+  const html = document.documentElement
+  
+  return Math.max( body.scrollHeight, body.offsetHeight, 
+    html.clientHeight, html.scrollHeight, html.offsetHeight )
+}
+
 declare var history: any;
 declare var location: any;
 
@@ -314,15 +322,31 @@ const App = () => {
   useEffect(() => {
     window.addEventListener("scroll", listener)
     const savedPosition = localStorage[scrollPositionName]
+    const maxLook = 100
+    let curInc = 0
     if (savedPosition) {
+      const scroll = () => {
+        if (curInc++ > maxLook) return
+        if (getBodyHeight() < savedPosition) {
+          setTimeout(scroll, 100)
+        } else {
+          window.scrollTo(0, savedPosition)
+        }
+      }
+      scroll()
       setTimeout(() => {
-        window.scrollTo(0, savedPosition)
-      }, 0)
+      }, 300)
     } else {
       if (window.location.hash) {
-        setTimeout(() => {
-          scrollToId(window.location.hash)
-        }, 0)
+        const scroll = () => {
+          if (curInc++ > maxLook) return
+          if (document.querySelector(window.location.hash)) {
+            scrollToId(window.location.hash)
+          } else {
+            setTimeout(scroll, 100)
+          }
+        }
+        scroll()
       }
     }
     return () => {

@@ -152,7 +152,7 @@ The consumer receives properties much like in [`createInput`](/input/create-inpu
   * just an object with the information that it is a `multi`
   * it looks like this `{$$__input_type: 'multi'}`
 * `name`: the original `name` option passed to the `multi`
-* `display`:
+* `Display`:
   * displays the data in a react component
   * mostly for debugging purposes
   * can pass `{full: true}` to get full state information

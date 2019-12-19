@@ -38,13 +38,14 @@ export const CodeBlock = ({language, value}) => {
     
     return (
       <>
-      <HL language={language}>
-        {value}
-      </HL>
       <h3 className={styles.resultHeading}>Result</h3>
       <div className={styles.result}>
         <Cmpt />
       </div>
+      <h3 className={styles.resultHeading}>Code</h3>
+      <HL language={language}>
+        {value}
+      </HL>
       </>
     )
   }
