@@ -21,12 +21,23 @@ import {
   Link,
   useLocation,
 } from "react-router-dom"
-import ScrollMemory from 'react-router-scroll-memory'
 import clsx from 'clsx'
 import { CodeBlock } from './CodeBlock/CodeBlock';
 import { routes } from './routes';
 
-const HistoryContext = createContext(({} as any))
+
+;(() => {
+  // show the route links for the react-snapshot
+  // should probably move md files to public.
+  const routeLinks = routes.reduce((acc, cur) => {
+    cur.children.forEach(route => {
+      acc.push(route.link)
+    })
+    return acc
+  }, ([] as string[]))
+  console.log(JSON.stringify(routeLinks, null, 2))
+})()
+
 
 const memoize = fn => {
   const cache = {}
@@ -74,11 +85,6 @@ function flatten(text, child) {
 
 const getMd = (file: string) => () => {
   const [cmpt, setCmpt] = useState(<div>Loading...</div>)
-  const {page, setPage} = useContext(HistoryContext)
-  const pathname = (window as any).location.pathname
-  if (page !== pathname && typeof setPage === "function") {
-    setPage(pathname)
-  }
   useEffect(() => {
     (async () => {
       try {
