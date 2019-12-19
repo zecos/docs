@@ -325,6 +325,7 @@ const App = () => {
     const maxLook = 100
     let curInc = 0
     if (savedPosition) {
+      console.log('found saved position')
       const scroll = () => {
         if (curInc++ > maxLook) return
         if (getBodyHeight() < savedPosition) {
@@ -343,6 +344,7 @@ const App = () => {
           if (document.querySelector(window.location.hash)) {
             scrollToId(window.location.hash)
           } else {
+            console.log('waiting')
             setTimeout(scroll, 100)
           }
         }
@@ -352,7 +354,7 @@ const App = () => {
     return () => {
       window.removeEventListener("scroll", listener)
     }
-  }, [])
+  }, [location.pathname])
   
   
   return (

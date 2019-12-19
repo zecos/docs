@@ -80,5 +80,11 @@ export const examples = {
   },"0260_mui-multi": {
     cmpt: require('./0260_mui-multi'),
     content: "import React from 'react'\nimport { TextInput, GroupLayout, Multi } from '@zecos/input-mui'\nimport { Button } from \"@material-ui/core\"\nimport { validateName } from '@zecos/validate'\n\nconst newPerson = () => GroupLayout({\n  name: 'friend',\n  items: [\n    TextInput({\n      validate: validateName,\n      name: \"firstName\"\n    }),\n    TextInput({\n      validate: validateName,\n      name: \"lastName\",\n    }),\n  ],\n})\n\nconst MultiForm = () => {\n  const {actions, Friends, FriendsDisplay} = Multi({\n    init: [\n      newPerson()\n    ],\n    name: \"friends\",\n  })\n  \n  return <div>\n      <Friends />\n      <br />\n      <Button\n        type=\"button\"\n        variant=\"outlined\"\n        onClick={() => actions.push(newPerson)}\n      >\n        Add Person\n      </Button>\n      <br />\n      <br />\n      <FriendsDisplay />\n    </div>\n}\n\nexport default MultiForm"
+  },"0270_mui-date-picker": {
+    cmpt: require('./0270_mui-date-picker'),
+    content: "import React from 'react'\nimport { DatePickerInput } from '@zecos/input-picker'\n\nconst MultiForm = () => {\n  const {AppointmentDate, AppointmentDateDisplay} = DatePickerInput({\n    init: new Date,\n    name: 'appointmentDate'\n  })\n  \n  return <div>\n    <AppointmentDate />\n    <AppointmentDateDisplay />\n    </div>\n}\n\nexport default MultiForm"
+  },"0280_mui-time-picker": {
+    cmpt: require('./0280_mui-time-picker'),
+    content: "import React from 'react'\nimport { TimePickerInput } from '@zecos/input-picker'\n\nconst MultiForm = () => {\n  const {AppointmentTime, AppointmentTimeDisplay} = TimePickerInput({\n    init: new Date,\n    name: 'appointmentTime'\n  })\n  \n  return <div>\n    <AppointmentTime />\n    <AppointmentTimeDisplay />\n    </div>\n}\n\nexport default MultiForm"
   }
 }
