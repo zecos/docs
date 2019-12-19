@@ -30,13 +30,13 @@ export const routes = [{
       link: "/ui-libraries/general",
       cmpt: uiGeneralPage,
     }, {
-      title: "@zecos/input-mui",
-      link: "/ui-libraries/input-mui",
-      cmpt: inputMuiPage,
-    }, {
       title: "@zecos/input-basic",
       link: "/ui-libraries/input-basic",
       cmpt: inputBasicPage,
+    }, {
+      title: "@zecos/input-mui",
+      link: "/ui-libraries/input-mui",
+      cmpt: inputMuiPage,
     }, {
       title: "@zecos/input-picker",
       link: "/ui-libraries/input-picker",

@@ -1,9 +1,8 @@
 import React from 'react'
-import { validateName } from '@zecos/validate'
-import { Select } from '@zecos/input-basic'
+import { Radio } from '@zecos/input-basic'
 
 const Example = () => {
-  const { FavoriteFlavorOfIceCream, FavoriteFlavorOfIceCreamDisplay } = Select({
+  const { FavoriteFlavorOfIceCream, FavoriteFlavorOfIceCreamDisplay } = Radio({
     init: 'chocolate',
     name: "favoriteFlavorOfIceCream"
   })

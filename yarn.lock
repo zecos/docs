@@ -1819,10 +1819,10 @@
   dependencies:
     "@zecos/validatorz" "0.0.1"
 
-"@zecos/input-basic@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@zecos/input-basic/-/input-basic-0.0.2.tgz#b118e19ff99f840cdf3c89907811cc20e0ef4044"
-  integrity sha512-/qonpxwiRoQaOO6ArPYeuMfWb1pFeNgjgaiP9iT+8tdcYzuGBbsnViyYO8QGs+GhjGcbwkks0sQrHYOtrEVsxQ==
+"@zecos/input-basic@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@zecos/input-basic/-/input-basic-0.0.4.tgz#643c39b59d0328861e19456495c3aa86fe2de020"
+  integrity sha512-XKJPISeXcU35k5v9R5UcMmIhAtwe/LoiqBBVa+WktYbDvzmuxtZ588nsy6gHQRW+QFOhqeTb3IcNBdl+qG23PQ==
 
 "@zecos/input-mui@^0.0.0":
   version "0.0.0"
@@ -1834,10 +1834,10 @@
     "@zecos/fieldz" "^0.0.8"
     date-fns "^2.0.0-beta.5"
 
-"@zecos/input@^0.0.12":
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/@zecos/input/-/input-0.0.12.tgz#195b66e6635e77d10ea73c4c7143a26241bd9067"
-  integrity sha512-7hzDBUN6k3C3Un8+zQhnl3pgVcm9m62RkrM3+pLmLBQe3CG0yoMQWs0M7f7LsAbRKbNYzR/4gaK38iqNNbwk7g==
+"@zecos/input@^0.0.15":
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/@zecos/input/-/input-0.0.15.tgz#03a91f15a974ff34ee316e75c1e299431a008ed4"
+  integrity sha512-sJUXNNRcVby0fUA/SOdI2y9GbOTzFpK+y25e2ZAn14jaSGzLGi//Eo0pJV3NA6O2D9ynesGiS0zjV0761Yn7sQ==
   dependencies:
     "@zecos/fieldz" "^0.0.8"
 

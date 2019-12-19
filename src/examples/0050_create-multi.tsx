@@ -1,24 +1,32 @@
 import React from 'react'
-import { TextInput, SimpleFormLayout } from '@zecos/input-mui'
-import { Button } from '@material-ui/core'
-import { validateName } from '@zecos/validate'
 import { createMulti } from '@zecos/input'
+import { Text, GroupLayout } from '@zecos/input-basic'
+import { validateName } from '@zecos/validate'
 
-
-const Multi:any = createMulti(({items}) => {
+const Multi:any = createMulti(({items, actions, helpers}) => {
   return <>
-    {items.map((Input, i) => <Input.Cmpt key={i} />)}
+    {items.map((Input, i) => (
+      <div key={i}>
+      <Input.Cmpt />
+      <button
+        style={{display: "block"}}
+        onClick={() => actions.splice(i, 1)}
+      >
+        Remove Person
+      </button>
+      </div>
+    ))}
   </>
 })
 
-const newSimple = () => SimpleFormLayout({
-  name: 'form',
+const newPerson = () => GroupLayout({
+  name: 'person',
   items: [
-    TextInput({
+    Text({
       validate: validateName,
       name: "firstName"
     }),
-    TextInput({
+    Text({
       validate: validateName,
       name: "lastName",
     }),
@@ -26,16 +34,22 @@ const newSimple = () => SimpleFormLayout({
 })
 
 const MultiForm = () => {
-  const {actions, FirstNames} = Multi({
+  const {actions, People, PeopleDisplay} = Multi({
     init: [
-      newSimple()
+      newPerson()
     ],
-    name: "firstNames",
+    name: "people",
   })
   
   return <div>
-      <FirstNames />
-      <Button variant="contained" onClick={() => actions.push(newSimple)}>Add Name</Button>
+      <People />
+      <PeopleDisplay />
+      <button
+        type="button"
+        onClick={() => actions.push(newPerson)}
+      >
+        Add Person
+      </button>
     </div>
 }
 
