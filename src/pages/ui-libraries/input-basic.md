@@ -20,13 +20,13 @@ There are several Input UI components, although, there will be more added in the
 ### Installation
 
 ```shell
-yarn add @zecos/input @zecos/material-ui @material-ui/core
+yarn add @zecos/input @zecos/input-basic
 ```
 
 or
 
 ```shell
-npm i -S @zecos/input @zecos/material-ui @material-ui/core
+npm i -S @zecos/input @zecos/input-basic
 ```
 
 ### Text
